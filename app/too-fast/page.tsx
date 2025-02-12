@@ -1,5 +1,5 @@
 
-const page = () => {
+const Page = () => {
   return (
     <main className='root-container flex flex-col min-h-screen items-center justify-center'>
       <h1 className='font-bebas-neue text-7xl font-bold text-light-100'>
@@ -13,4 +13,4 @@ const page = () => {
   );
 }
 
-export default page
+export default Page

@@ -11,7 +11,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   providers: [
     CredentialProvider({
-      async authorize(credentials) {
+      async authorize(credentials): Promise<User | null> {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
