@@ -8,6 +8,13 @@
       "when": 1738596730599,
       "tag": "0000_curious_rhino",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1739804799335,
+      "tag": "0001_military_dragon_man",
+      "breakpoints": true
     }
   ]
 }

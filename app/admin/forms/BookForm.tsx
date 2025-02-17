@@ -1,8 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
 import {
   Form,
   FormControl,
@@ -18,6 +19,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import FileUpload from '@/components/FileUpload';
 import ColorPicker from '@/components/admin/ColorPicker';
+import { createBook } from '@/lib/admin/actions/book';
+import { toast } from '@/hooks/use-toast';
 
 interface Props extends Partial<Book> {
   type?: 'create' | 'update';
@@ -43,7 +46,22 @@ const BookForm = ({ type, ...book }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-    console.log(values);
+    const result = await createBook(values);
+
+    if (result.success) {
+      toast({
+        title: 'Success',
+        description: 'Book created successfully',
+      });
+
+      router.push(`/admin/books/${result.data.id}`);
+    } else {
+      toast({
+        title: 'Error',
+        description: result.message,
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -61,8 +79,8 @@ const BookForm = ({ type, ...book }: Props) => {
                 <Input
                   required
                   placeholder='Book title'
-                  className='book-form_input'
                   {...field}
+                  className='book-form_input'
                 />
               </FormControl>
               <FormMessage />
@@ -81,8 +99,8 @@ const BookForm = ({ type, ...book }: Props) => {
                 <Input
                   required
                   placeholder='Book author'
-                  className='book-form_input'
                   {...field}
+                  className='book-form_input'
                 />
               </FormControl>
               <FormMessage />
@@ -101,14 +119,15 @@ const BookForm = ({ type, ...book }: Props) => {
                 <Input
                   required
                   placeholder='Book genre'
-                  className='book-form_input'
                   {...field}
+                  className='book-form_input'
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name={'rating'}
@@ -123,14 +142,15 @@ const BookForm = ({ type, ...book }: Props) => {
                   min={1}
                   max={5}
                   placeholder='Book rating'
-                  className='book-form_input'
                   {...field}
+                  className='book-form_input'
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name={'totalCopies'}
@@ -145,14 +165,15 @@ const BookForm = ({ type, ...book }: Props) => {
                   min={1}
                   max={10000}
                   placeholder='Total copies'
-                  className='book-form_input'
                   {...field}
+                  className='book-form_input'
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name={'coverUrl'}
@@ -186,8 +207,8 @@ const BookForm = ({ type, ...book }: Props) => {
               </FormLabel>
               <FormControl>
                 <ColorPicker
-                  value={field.value}
                   onPickerChange={field.onChange}
+                  value={field.value}
                 />
               </FormControl>
               <FormMessage />
@@ -205,15 +226,17 @@ const BookForm = ({ type, ...book }: Props) => {
               <FormControl>
                 <Textarea
                   placeholder='Book description'
-                  className='book-form_input'
                   {...field}
                   rows={10}
+                  className='book-form_input'
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name={'videoUrl'}
@@ -226,7 +249,7 @@ const BookForm = ({ type, ...book }: Props) => {
                 <FileUpload
                   type='video'
                   accept='video/*'
-                  placeholder='Upload a video trailer'
+                  placeholder='Upload a book trailer'
                   folder='books/videos'
                   variant='light'
                   onFileChange={field.onChange}
@@ -248,15 +271,17 @@ const BookForm = ({ type, ...book }: Props) => {
               <FormControl>
                 <Textarea
                   placeholder='Book summary'
-                  className='book-form_input'
                   {...field}
                   rows={5}
+                  className='book-form_input'
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
         />
+
         <Button type='submit' className='book-form_btn text-white'>
           Add Book to Library
         </Button>
@@ -264,5 +289,4 @@ const BookForm = ({ type, ...book }: Props) => {
     </Form>
   );
 };
-
 export default BookForm;
