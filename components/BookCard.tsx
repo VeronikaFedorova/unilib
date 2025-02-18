@@ -8,8 +8,8 @@ const BookCard = ({
   id,
   title,
   genre,
-  color,
-  cover,
+  coverColor,
+  coverUrl,
   isLoanedBook = false,
 }: Book) => (
   <li className={cn(isLoanedBook && 'xs:w-52 w-full')}>
