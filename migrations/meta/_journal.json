@@ -15,6 +15,20 @@
       "when": 1739804799335,
       "tag": "0001_military_dragon_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1741092253535,
+      "tag": "0002_striped_vin_gonzales",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1741093350257,
+      "tag": "0003_elite_lilith",
+      "breakpoints": true
     }
   ]
 }
